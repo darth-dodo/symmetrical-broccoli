@@ -13,8 +13,24 @@ using TypeSpec.Rest;
 namespace PetStore;
 
 @route("/pets")
-interface Pets {
-  list(): Pet[];
+namespace Pets {
+  op list(@query skip?: int32, @query top?: int32): Pet[];
+  op read(@path petId: int32, @header ifMatch?: string): {
+    @header eTag: string;
+    @body pet: Pet;
+  };
+  
+  @post
+  op create(@body pet: Pet): {};
+
+}
+
+@route("pets/{petId}/toys")
+namespace PetToys {
+    model Toy {
+        name: string;
+    }
+    op list(@path petId: int32): Toy[];
 }
 
 model Pet {
