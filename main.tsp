@@ -27,3 +27,32 @@ model Pet {
 
   kind: "dog" | "cat" | "fish";
 }
+
+model CommonParameters {
+    @path
+    @segment("tenants")
+    tenantId: string;
+
+    @path
+    @segment("users")
+    userName: string;
+}
+
+model User {
+    name: string;
+}
+
+@error
+model Error {
+    message: string;
+}
+
+@autoRoute
+interface UserOperations {
+    @get
+    getUser(...CommonParameters): User | Error;
+
+    @put
+    updateUser(...CommonParameters, user: User): User | Error;
+
+}
