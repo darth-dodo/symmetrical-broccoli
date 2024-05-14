@@ -14,14 +14,22 @@ namespace PetStore;
 
 @route("/pets")
 namespace Pets {
-  op list(@query skip?: int32, @query top?: int32): Pet[];
+  op list(@query skip: int32, @query top: int32): {
+    @statusCode statusCode: 200;
+    @body pets: Pet[];
+  };
   op read(@path petId: int32, @header ifMatch?: string): {
+    @statusCode statusCode: 200;
     @header eTag: string;
     @body pet: Pet;
+  } | {
+    @statusCode statusCode: 404;
   };
   
   @post
-  op create(@body pet: Pet): {};
+  op create(...Pet): {
+    @statusCode statusCode: 204;
+  };
 
 }
 
