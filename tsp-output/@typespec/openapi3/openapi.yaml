@@ -11,13 +11,13 @@ paths:
       parameters:
         - name: skip
           in: query
-          required: false
+          required: true
           schema:
             type: integer
             format: int32
         - name: top
           in: query
-          required: false
+          required: true
           schema:
             type: integer
             format: int32
@@ -34,8 +34,8 @@ paths:
       operationId: Pets_create
       parameters: []
       responses:
-        '200':
-          description: The request has succeeded.
+        '204':
+          description: 'There is no content to send for this request, but the headers may be useful. '
       requestBody:
         required: true
         content:
@@ -69,6 +69,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Pet'
+        '404':
+          description: The server cannot find the requested resource.
   /pets/{petId}/toys:
     get:
       operationId: PetToys_list
